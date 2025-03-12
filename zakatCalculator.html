@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zakat Calculator</title>
+</head>
+<body style="font-family: Arial, sans-serif; max-width: 500px; margin: 20px auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background: #f9f9f9; text-align: center;">
+    
+    <h2 style="color: #2c3e50;">Zakat Calculator</h2>
+    
+    <p style="color: #d35400; font-weight: bold; padding: 10px; background: #fde3a7; border-radius: 5px;">
+        Please be truthful as Zakat is a sure way of protecting one's wealth if Zakat has been paid on it regularly and fully.
+    </p>
+
+    <label>Cash in Hand & Bank: </label>
+    <input type="number" id="cash" value="0" oninput="calculateZakat()" style="width: 100%; padding: 8px; margin: 5px 0;"><br>
+
+    <label>Gold 24K (grams): </label>
+    <input type="number" id="gold24" value="0" oninput="calculateZakat()" style="width: 100%; padding: 8px; margin: 5px 0;"><br>
+
+    <label>Gold 22K (grams): </label>
+    <input type="number" id="gold22" value="0" oninput="calculateZakat()" style="width: 100%; padding: 8px; margin: 5px 0;"><br>
+
+    <label>Gold 20K (grams): </label>
+    <input type="number" id="gold20" value="0" oninput="calculateZakat()" style="width: 100%; padding: 8px; margin: 5px 0;"><br>
+
+    <label>Gold 18K (grams): </label>
+    <input type="number" id="gold18" value="0" oninput="calculateZakat()" style="width: 100%; padding: 8px; margin: 5px 0;"><br>
+
+    <label>Gold Price per gram (24K): </label>
+    <input type="number" id="goldPrice" value="6000" oninput="calculateZakat()" style="width: 100%; padding: 8px; margin: 5px 0;"><br>
+
+    <label>Silver (grams): </label>
+    <input type="number" id="silver" value="0" oninput="calculateZakat()" style="width: 100%; padding: 8px; margin: 5px 0;"><br>
+
+    <label>Silver Price per gram: </label>
+    <input type="number" id="silverPrice" value="75" oninput="calculateZakat()" style="width: 100%; padding: 8px; margin: 5px 0;"><br>
+
+    <label>Investments: </label>
+    <input type="number" id="investments" value="0" oninput="calculateZakat()" style="width: 100%; padding: 8px; margin: 5px 0;"><br>
+
+    <label>Liabilities (loans, dues): </label>
+    <input type="number" id="liabilities" value="0" oninput="calculateZakat()" style="width: 100%; padding: 8px; margin: 5px 0;"><br>
+
+    <h3 style="color: #27ae60;">Total Zakatable Wealth: <span id="totalWealth">0</span></h3>
+    <h3 style="color: #c0392b;">Zakat Payable (2.5%): <span id="zakatAmount">0</span></h3>
+
+    <script>
+        function calculateZakat() {
+            // Get input values
+            let cash = parseFloat(document.getElementById("cash").value) || 0;
+            let gold24 = parseFloat(document.getElementById("gold24").value) || 0;
+            let gold22 = parseFloat(document.getElementById("gold22").value) || 0;
+            let gold20 = parseFloat(document.getElementById("gold20").value) || 0;
+            let gold18 = parseFloat(document.getElementById("gold18").value) || 0;
+            let goldPrice = parseFloat(document.getElementById("goldPrice").value) || 0;
+            let silver = parseFloat(document.getElementById("silver").value) || 0;
+            let silverPrice = parseFloat(document.getElementById("silverPrice").value) || 0;
+            let investments = parseFloat(document.getElementById("investments").value) || 0;
+            let liabilities = parseFloat(document.getElementById("liabilities").value) || 0;
+
+            // Convert gold karats to pure gold
+            let pureGold = gold24 + (gold22 * 22 / 24) + (gold20 * 20 / 24) + (gold18 * 18 / 24);
+            let goldValue = pureGold * goldPrice;
+            let silverValue = silver * silverPrice;
+
+            // Calculate total zakatable wealth
+            let totalWealth = cash + goldValue + silverValue + investments - liabilities;
+            document.getElementById("totalWealth").innerText = totalWealth.toFixed(2);
+
+            // Determine nisab (87.48g gold)
+            let nisab = 87.48 * goldPrice;
+            let zakatAmount = totalWealth >= nisab ? totalWealth * 2.5 / 100 : 0;
+
+            document.getElementById("zakatAmount").innerText = zakatAmount.toFixed(2);
+        }
+
+        // Run initial calculation
+        calculateZakat();
+    </script>
+</body>
+</html>
