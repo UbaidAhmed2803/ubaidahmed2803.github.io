@@ -13,9 +13,13 @@
         Please be truthful as Zakat is a sure way of protecting one's wealth if Zakat has been paid on it regularly and fully.
     </p>
 
-    <p style="color: #2980b9; font-weight: bold;">
-        Please ensure to update the per gram price for gold 24k and silver. Rest of the calculations will be done automatically.
-    </p>
+    <p style="color: #2980b9; font-weight: bold;">Plz ensure to update the per gram price for gold 24K and silver. Rest of the calculations will be done automatically.</p>
+
+    <label><b>Select School of Thought:</b></label>
+    <select id="schoolOfThought" onchange="calculateZakat()" style="width: 100%; padding: 8px; margin: 10px 0;">
+        <option value="hanafi">Hanafi (Silver Nisab if lower)</option>
+        <option value="shafii">Shafi'i (Gold Nisab Only)</option>
+    </select>
 
     <label>Cash in Hand & Bank: </label>
     <input type="number" id="cash" value="0" oninput="calculateZakat()" style="width: 100%; padding: 8px; margin: 5px 0;"><br>
@@ -33,19 +37,22 @@
     <input type="number" id="gold18" value="0" oninput="calculateZakat()" style="width: 100%; padding: 8px; margin: 5px 0;"><br>
 
     <label>Gold Price per gram (24K): </label>
-    <input type="number" id="goldPrice" value="8864" oninput="calculateZakat()" style="width: 100%; padding: 8px; margin: 5px 0;"><br>
+    <input type="number" id="goldPrice" value="6000" oninput="calculateZakat()" style="width: 100%; padding: 8px; margin: 5px 0;"><br>
 
     <label>Silver (grams): </label>
     <input type="number" id="silver" value="0" oninput="calculateZakat()" style="width: 100%; padding: 8px; margin: 5px 0;"><br>
 
     <label>Silver Price per gram: </label>
-    <input type="number" id="silverPrice" value="101" oninput="calculateZakat()" style="width: 100%; padding: 8px; margin: 5px 0;"><br>
+    <input type="number" id="silverPrice" value="75" oninput="calculateZakat()" style="width: 100%; padding: 8px; margin: 5px 0;"><br>
 
     <label>Investments: </label>
     <input type="number" id="investments" value="0" oninput="calculateZakat()" style="width: 100%; padding: 8px; margin: 5px 0;"><br>
 
     <label>Liabilities (loans, dues): </label>
     <input type="number" id="liabilities" value="0" oninput="calculateZakat()" style="width: 100%; padding: 8px; margin: 5px 0;"><br>
+
+    <!-- Nisab Calculation Method Message -->
+    <p id="nisabMethod" style="color: #8e44ad; font-weight: bold; margin-top: 15px;"></p>
 
     <h3 style="color: #27ae60;">Total Zakatable Wealth: <span id="totalWealth">0</span></h3>
     <h3 style="color: #c0392b;">Zakat Payable (2.5%): <span id="zakatAmount">0</span></h3>
@@ -73,8 +80,26 @@
             let totalWealth = cash + goldValue + silverValue + investments - liabilities;
             document.getElementById("totalWealth").innerText = totalWealth.toFixed(2);
 
-            // Determine nisab (87.48g gold)
-            let nisab = 87.48 * goldPrice;
+            // Nisab Calculation
+            let goldNisab = 87.48 * goldPrice;  // Gold nisab value
+            let silverNisab = 612.36 * silverPrice;  // Silver nisab value
+
+            // Get selected school of thought
+            let school = document.getElementById("schoolOfThought").value;
+            let nisab, nisabMessage;
+
+            if (school === "hanafi") {
+                nisab = Math.min(goldNisab, silverNisab);
+                nisabMessage = `Hanafi School: Nisab is based on the lower value of either 87.48g gold or 612.36g silver.`;
+            } else {
+                nisab = goldNisab;
+                nisabMessage = `Shafi'i School: Nisab is based only on 87.48g gold value.`;
+            }
+
+            // Display nisab calculation method message
+            document.getElementById("nisabMethod").innerText = nisabMessage;
+
+            // Calculate zakat if total wealth is >= nisab
             let zakatAmount = totalWealth >= nisab ? totalWealth * 2.5 / 100 : 0;
 
             document.getElementById("zakatAmount").innerText = zakatAmount.toFixed(2);
