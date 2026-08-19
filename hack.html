@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System Notice</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #000;
+      color: #00ff41;
+      font-family: "Courier New", monospace;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .screen {
+      width: min(900px, 92vw);
+      text-align: center;
+      padding: 40px 20px;
+      text-shadow: 0 0 8px #00ff41;
+    }
+
+    .skull {
+      font-size: 80px;
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      font-size: clamp(32px, 7vw, 72px);
+      margin: 0 0 20px;
+      letter-spacing: 4px;
+      animation: flicker 1.5s infinite;
+    }
+
+    .line {
+      color: #ff3030;
+      text-shadow: 0 0 8px #ff3030;
+      font-size: 18px;
+      margin: 12px 0;
+    }
+
+    .terminal {
+      margin: 30px auto;
+      max-width: 700px;
+      text-align: left;
+      border: 1px solid #00ff41;
+      padding: 20px;
+      background: rgba(0, 255, 65, 0.03);
+      box-shadow: 0 0 20px rgba(0, 255, 65, 0.15);
+    }
+
+    .terminal p {
+      margin: 8px 0;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      height: 18px;
+      background: #00ff41;
+      animation: blink .7s infinite;
+      vertical-align: middle;
+    }
+
+    .prank {
+      margin-top: 35px;
+      color: #fff;
+      font-size: 16px;
+      opacity: .8;
+      text-shadow: none;
+    }
+
+    @keyframes flicker {
+      0%, 18%, 22%, 63%, 64%, 100% { opacity: 1; }
+      20%, 62% { opacity: .4; }
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="screen">
+    <div class="skull">☠</div>
+
+    <h1>HACKED BY UBAID</h1>
+
+    <div class="line">SYSTEM ACCESS: GRANTED</div>
+
+    <div class="terminal">
+      <p>&gt; initializing connection...</p>
+      <p>&gt; bypassing security...</p>
+      <p>&gt; accessing mainframe...</p>
+      <p>&gt; ████████████████████ 100%</p>
+      <p>&gt; connection established <span class="cursor"></span></p>
+    </div>
+  </main>
+</body>
+</html>
